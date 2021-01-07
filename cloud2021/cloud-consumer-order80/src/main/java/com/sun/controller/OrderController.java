@@ -21,9 +21,9 @@ import java.util.List;
 @RestController
 @Slf4j
 public class OrderController {
-    public static final String PAYMENT_URL = "http://localhost:8001/PaymentController";
+//    public static final String PAYMENT_URL = "http://localhost:8001/PaymentController";
 
-//    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
+    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE/PaymentController";
 
     @Resource
     private RestTemplate restTemplate;
@@ -39,5 +39,8 @@ public class OrderController {
         return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
     }
 
-
+    @GetMapping("/consumer/payment/getPaymentList")
+    public CommonResult<Payment> getPayment() {
+        return restTemplate.getForObject(PAYMENT_URL + "/payment/getPaymentList" , CommonResult.class);
+    }
 }

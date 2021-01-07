@@ -7,6 +7,7 @@ import com.sun.service.PaymentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @auther zzyy
@@ -23,5 +24,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     public Payment getPaymentById(Long id) {
         return paymentDao.getPaymentById(id);
+    }
+
+    @Override
+    public List<Payment> getPaymentList() {
+        return paymentDao.getPaymentList();
     }
 }

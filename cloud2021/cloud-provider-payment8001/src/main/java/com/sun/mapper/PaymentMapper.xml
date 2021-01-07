@@ -19,7 +19,9 @@
     <select id="getPaymentById"  resultMap="BaseResultMap">
         select * from payment where id=#{id};
     </select>
-
+    <select id="getPaymentList"  resultMap="BaseResultMap">
+        select * from payment ;
+    </select>
 </mapper>
 
 
