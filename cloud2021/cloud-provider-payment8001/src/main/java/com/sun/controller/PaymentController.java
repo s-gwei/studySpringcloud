@@ -1,6 +1,7 @@
 package com.sun.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.sun.entity.CommonResult;
 import com.sun.entity.Payment;
 import com.sun.service.PaymentService;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @Slf4j
-@RequestMapping("/PaymentController")
+@RequestMapping
 public class PaymentController {
     @Resource
     private PaymentService paymentService;
@@ -57,7 +58,7 @@ public class PaymentController {
     public CommonResult<Payment> getPaymentList() {
         List<Payment> payment = paymentService.getPaymentList();
         if (payment != null) {
-            return new CommonResult(200, "查询成功,serverPort:  " + serverPort, payment);
+            return new CommonResult(200, "查询成功,serverPort:  " + serverPort,  payment);
         } else {
             return new CommonResult(444, "没有对应记录, "  , null);
         }

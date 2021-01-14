@@ -43,4 +43,15 @@ public class OrderController {
     public CommonResult<Payment> getPayment() {
         return restTemplate.getForObject(PAYMENT_URL + "/payment/getPaymentList" , CommonResult.class);
     }
+    @GetMapping("/consumer/payment/getForEntity")
+    public CommonResult<Payment> getPayment2()
+    {
+        ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENT_URL+"/payment/getPaymentList",CommonResult.class);
+
+        if(entity.getStatusCode().is2xxSuccessful()){
+            return entity.getBody();
+        }else{
+            return new CommonResult<>(444,"操作失败");
+        }
+    }
 }

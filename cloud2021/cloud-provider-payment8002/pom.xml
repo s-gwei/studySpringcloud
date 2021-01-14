@@ -80,6 +80,11 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.22</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.3</version>
+        </dependency>
     </dependencies>
     <!--添加自定义包扫描，否则不能扫描到配置在java下的包-->
     <build>
