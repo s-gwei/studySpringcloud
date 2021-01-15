@@ -23,7 +23,7 @@ import java.util.List;
 public class OrderController {
 //    public static final String PAYMENT_URL = "http://localhost:8001/PaymentController";
 
-    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE/PaymentController";
+    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE/";
 
     @Resource
     private RestTemplate restTemplate;
@@ -41,17 +41,24 @@ public class OrderController {
 
     @GetMapping("/consumer/payment/getPaymentList")
     public CommonResult<Payment> getPayment() {
-        return restTemplate.getForObject(PAYMENT_URL + "/payment/getPaymentList" , CommonResult.class);
+        return restTemplate.getForObject(PAYMENT_URL + "/payment/getPaymentList", CommonResult.class);
     }
-    @GetMapping("/consumer/payment/getForEntity")
-    public CommonResult<Payment> getPayment2()
-    {
-        ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENT_URL+"/payment/getPaymentList",CommonResult.class);
 
-        if(entity.getStatusCode().is2xxSuccessful()){
+    @GetMapping("/consumer/payment/getForEntity")
+    public CommonResult<Payment> getPayment2() {
+        ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENT_URL + "/payment/getPaymentList", CommonResult.class);
+
+        if (entity.getStatusCode().is2xxSuccessful()) {
             return entity.getBody();
-        }else{
-            return new CommonResult<>(444,"操作失败");
+        } else {
+            return new CommonResult<>(444, "操作失败");
         }
+    }
+
+    // ====================> zipkin+sleuth
+    @GetMapping("/consumer/payment/zipkin")
+    public String paymentZipkin() {
+        String result = restTemplate.getForObject(PAYMENT_URL + "/payment/zipkin/", String.class);
+        return result;
     }
 }

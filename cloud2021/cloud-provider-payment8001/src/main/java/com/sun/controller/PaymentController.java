@@ -58,23 +58,22 @@ public class PaymentController {
     public CommonResult<Payment> getPaymentList() {
         List<Payment> payment = paymentService.getPaymentList();
         if (payment != null) {
-            return new CommonResult(200, "查询成功,serverPort:  " + serverPort,  payment);
+            return new CommonResult(200, "查询成功,serverPort:  " + serverPort, payment);
         } else {
-            return new CommonResult(444, "没有对应记录, "  , null);
+            return new CommonResult(444, "没有对应记录, ", null);
         }
     }
 
     @GetMapping(value = "/payment/discovery")
-    public Object discovery()
-    {
+    public Object discovery() {
         List<String> services = discoveryClient.getServices();
         for (String element : services) {
-            log.info("*****element: "+element);
+            log.info("*****element: " + element);
         }
 
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
         for (ServiceInstance instance : instances) {
-            log.info(instance.getServiceId()+"\t"+instance.getHost()+"\t"+instance.getPort()+"\t"+instance.getUri());
+            log.info(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort() + "\t" + instance.getUri());
         }
 
         return this.discoveryClient;
@@ -96,9 +95,8 @@ public class PaymentController {
         return serverPort;
     }
 
-//    @GetMapping("/payment/zipkin")
-//    public String paymentZipkin()
-//    {
-//        return "hi ,i'am paymentzipkin server fall back，welcome to atguigu，O(∩_∩)O哈哈~";
-//    }
+    @GetMapping("/payment/zipkin")
+    public String paymentZipkin() {
+        return "hi ,i'am paymentzipkin server fall back，welcome to atguigu，O(∩_∩)O哈哈~";
+    }
 }
