@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
-@MapperScan("com.sun.dao")
+@MapperScan("com.sun.dao")//扫描dao接口
 @EnableEurekaClient
 @EnableDiscoveryClient
 public class PaymentMain8001 {

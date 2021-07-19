@@ -20,6 +20,9 @@ public class GateWayConfig
         routes.route("path_route_atguigu",
                 r -> r.path("/bilibili")
                         .uri("https://www.bilibili.com")).build();
+        routes.route("path_route_atguigu1",
+                r -> r.path("/guonei")
+                        .uri("http://news.baidu.com/guonei")).build();
 
         return routes.build();
     }

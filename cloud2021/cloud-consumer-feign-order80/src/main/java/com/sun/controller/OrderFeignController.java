@@ -32,6 +32,5 @@ public class OrderFeignController {
     @GetMapping(value = "/consumer/payment/getPaymentList")
     public CommonResult<Payment> getPaymentList() {
         return paymentFeignService.getPaymentList();
-
     }
 }

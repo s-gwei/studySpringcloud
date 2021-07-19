@@ -21,12 +21,18 @@ public class PaymentService {
     }
 
     @HystrixCommand(fallbackMethod = "paymentInfo_TimeOutHandler", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
-    })
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "4000")
+            })
+    /**
+     * @HystrixCommand
+     * 如果请求的相应时间超过4秒，或者运行异常
+     * 使服务降级，执行兜底方法
+     * paymentInfo_TimeOutHandler
+     */
     public String paymentInfo_TimeOut(Integer id) {
 //        int age = 10/0;
         try {
-            TimeUnit.MILLISECONDS.sleep(3000);
+            TimeUnit.MILLISECONDS.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -38,12 +44,19 @@ public class PaymentService {
     }
 
 
-    //=====服务熔断
+    /**=====服务熔断
+     *
+     * @param id
+     * @return
+     *设置一个服务熔断，当10秒内请求200次，失败率达到10%后，
+     *跳闸，在下一个10秒内，不满足以上条件，服务恢复
+     *
+     */
     @HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback", commandProperties = {
             @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),// 是否开启断路器
-            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2"),// 请求次数
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),// 请求次数
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"), // 时间窗口期
-            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "1"),// 失败率达到多少后跳闸
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "20"),// 失败率达到多少后跳闸
     })
     public String paymentCircuitBreaker(@PathVariable("id") Integer id) {
         if (id < 0) {

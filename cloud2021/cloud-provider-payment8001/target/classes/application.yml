@@ -17,6 +17,7 @@ spring:
     username: root
     password: sungw
 mybatis:
+  #扫描mapper的xml文件
   mapperLocations: classpath:com/sun/mapper/*.xml
   type-aliases-package: com.sun.entity    # 所有Entity别名类所在包
 

@@ -6,6 +6,7 @@ import com.sun.entity.CommonResult;
 import com.sun.entity.Payment;
 import com.sun.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @Slf4j
-@RequestMapping
+@RequestMapping()
 public class PaymentController {
     @Resource
     private PaymentService paymentService;
@@ -29,7 +30,7 @@ public class PaymentController {
     @Value("${server.port}")
     private String serverPort;
 
-    @Resource
+    @Autowired
     private DiscoveryClient discoveryClient;
 
     @PostMapping(value = "/payment/create")
@@ -64,14 +65,19 @@ public class PaymentController {
         }
     }
 
+    /**
+     *
+     * @return
+     * 获取注册进Eureka服务名称
+     */
     @GetMapping(value = "/payment/discovery")
     public Object discovery() {
         List<String> services = discoveryClient.getServices();
         for (String element : services) {
             log.info("*****element: " + element);
         }
-
-        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        String str = services.get(0);
+        List<ServiceInstance> instances = discoveryClient.getInstances(str);
         for (ServiceInstance instance : instances) {
             log.info(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort() + "\t" + instance.getUri());
         }

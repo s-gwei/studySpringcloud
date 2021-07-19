@@ -19,11 +19,11 @@ public class MyLogGateWayFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("***********come in MyLogGateWayFilter:  "+new Date());
         String username = exchange.getRequest().getQueryParams().getFirst("username");
-        if(username ==null){
-            log.info("*******用户名为null，非法用户，o(╥﹏╥)o");
-            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
-            return exchange.getResponse().setComplete();
-        }
+//        if(username ==null){
+//            log.info("*******用户名为null，非法用户，o(╥﹏╥)o");
+//            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
+//            return exchange.getResponse().setComplete();
+//        }
         return chain.filter(exchange);
     }
 
